@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Shit CSS</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<style type="text/css">
+		
+*{
+	box-sizing: border-box;
+}
+
+body{
+	background: rgb(0, 0, 0);
+}
+
+.container{
+	position: relative;
+	margin: 200px auto;
+	width: 300px;
+	height: 300px;
+	perspective: 500px;
+}
+
+.cube{
+	width: inherit;
+	height: inherit;
+	transform-style: preserve-3d;
+}
+
+.side{
+	position: absolute;
+	width: inherit;
+	height: inherit;
+	border: 5px solid white;
+	font: normal 70px Arial;
+	text-align: center;
+	line-height: 300px;
+	color: #fff;
+	backface-visibility: visible;
+}
+
+.front{
+	transform: translateZ(150px);
+}
+
+.back{
+	transform: rotateY(180deg) translateZ(150px);
+}
+
+.right{
+	transform: rotateX(90deg) translateZ(150px);
+}
+
+.left{
+	transform: rotateX(270deg) translateZ(150px);
+}
+
+.bottom{
+	transform: rotateX(90deg) translateZ(150px);
+}
+
+.top{
+	transform: rotateX(270deg) translateZ(150px);
+}
+	</style>
+</head>
+<body>
+
+	<div class="container">
+		<div class="cube">
+			<div class="side front">front</div>
+			<div class="side back">back</div>
+			<div class="side right">right</div>
+			<div class="side left">left</div>
+			<div class="side bottom">bottom</div>
+			<div class="side top">top</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		(function () {
+			var rotateX = 0;
+			var rotateY = 0;
+
+			document.onkeydown = function (e) {
+					if (e.keyCode === 37) rotateY -=6
+				else if (e.keyCode === 38) rotateX +=6
+				else if (e.keyCode === 39) rotateY +=6
+				else if (e.keyCode === 40) rotateX -=6
+
+				document.querySelector('.cube').style.transform = 
+				'rotateY(' + rotateY + 'deg)' +
+				'rotateX(' + rotateX + 'deg)';
+			}
+		})();
+	</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

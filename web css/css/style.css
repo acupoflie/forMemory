@@ -1,0 +1,76 @@
+
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body{
+	overflow: hidden;
+	background: #f3f3f3;
+	height: 100vh;
+}
+
+
+.container{
+	display: flex;
+	height: 100%;
+}
+
+.item{
+	flex: 1 1 250px;
+	background-position: center;
+	background-size: cover;
+	opacity: .4;
+	transition: opacity .5s; 
+}
+
+.item:hover { opacity:1 }
+
+.item1{ background-image: url(../flex/anime1.jpeg) }
+.item2{ background-image: url(../flex/anime2.jpeg) }
+.item3{ background-image: url(../flex/anime3.jpeg) }
+.item4{ background-image: url(../flex/anime4.jpeg) }
+.item5{ background-image: url(../flex/anime5.webp) }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
