@@ -1,0 +1,1 @@
+<a href="index.php?sayfa=insert">[Icerik ekle]</a>
