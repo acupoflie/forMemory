@@ -1,0 +1,216 @@
+PHP notes
+
+
+
+func_num_args()
+func_get_args()
+function_exists()
+memory_get_usage()
+number_format()
+
+Implode(‘,’ , $arr) - arrayin elemanlarını birleştirme
+Explode()
+strlen()
+strstr($hay, $stack)
+str_replace($string, $for, $source)
+mb_substr($str, 0 , $limit, ‘utf8 ’)
+trim()
+uniqid()
+
+printf('There are %2$d %3$s in %1$s', 'Africa', 5, 'monkeys')
+vprintf('%d-%02d-%02d', explode('-', "2020-7-7"));
+
+strip_tags() - html taglerini siliyor
+htmlspecialchars() - html taglerini zararsizlastiriyo
+
+filesize()
+feof()
+file_get_contents() - dosyanın icini okuyor
+scandiv(‘.’)
+glob(‘*.php’, GLOB_BRACE)
+move_uploaded_file($file, where)
+
+array_key_exists()
+array_shift()
+array_unshift()
+array_pop()
+array_push()
+array_unique()
+in_array()
+Is_array()
+array_search()
+array_merge()
+array_combine()
+array_count_values()
+array_flip()
+array_values()
+extract() - arrayde ki keyleri değişken gibi kullanmak icin
+
+
+—————————————————————————————————
+
+global $ad;
+$GLOBALS[‘’ad] - bir değişkeni fonksiyon icinde kullanmak icin
+
+—————————————————————————————————
+
+foreach($name as $key => $value)
+
+—————————————————————————————————
+
+strlen($value) - değişken uzunluğunu bulmak icin
+
+—————————————————————————————————
+
+Anonym function - use($value) , array_map($array), array_filter();
+
+$soyad = "Akcay";
+
+function filtrele($isim){
+    global $soyad;
+    return $isim . " " . $soyad;
+}
+
+$arr = ["Enver", "Umut", "Luna"];
+$arr = array_map(function($isim) use($soyad){
+    return $isim . " " . $soyad;
+} ,$arr);
+
+—————————————————————————————————
+
+    function listele($categories, $parent = 0){
+
+        echo '<ul>';
+        foreach($categories as $cat) {
+            if($cat['parent'] == $parent){
+                echo  '<li>' . $cat['ad'];
+                echo listele($categories, $cat['id']);
+                echo '</li>';
+            }
+        }
+        echo '</ul>';
+    }
+
+—————————————————————————————————
+
+function say($start, $limit){
+    for ($i = $start; $i <= $limit; $i++) {
+        yield $i;
+    }
+	return $I
+ }
+
+$sayilar = range(0, 100)
+
+—————————————————————————————————
+
+Static keyword
+
+funtion($deger){
+	static $degerler;
+	$degerler = $deger;
+	return $degerler;
+}
+
+—————————————————————————————————
+
+declare(strict_types = 1)
+
+function number(int $sayi1, int $sayi2) : integer{ return $sayi1 + $sayi2 }
+
+
+
+
+
+MySQL notes
+
+CRUD
+INSERT INTO users() values ();
+SELECT * FROM users
+UPDATE users SET column = value
+DELETE FROM users
+
+EXPLAIN users
+DESCRIBE users
+SHOW FIELDS FROM users
+SHOW FIELDS IN db
+SELECT * FROM information_schema.TABLES where TABLE_SCHEMA = ‘db name’
+
+SELECT * FROM users ORDER BY id DESC LIMIT 2
+
+SELECT sehir, MIN(Maas) as Minimum, MAX(Maas) as MAXIMUM, Count(id) as Kisiler
+FROM calisanlar 
+GROUP BY sehir 
+HAVING Minimum > 2000
+
+SELECT meslek, count(id) as toplam FROM calisanlar GROUP BY meslek
+
+SELECT * FROM calisanlar WHERE id NOT IN (5,6,7)
+
+SELECT * FROM calisanlar 
+WHERE meslek IN (SELECT meslek FROM meslekler)
+
+SELECT * FROM diziler 
+WHERE FIND_IN_SET(2, turler). - turlerin icinde 2 olanlari bul
+
+SELECT * FROM calisanlar
+WHERE maas BETWEEN 2000 AND 3000
+
+SELECT * FROM konular
+INNER JOIN uyeler ON uyeler.uye_id = konular.uye_id                        - LEFT JOIN , RIGHT JOIN
+INNER JOIN kategoriler ON kategoriler.id = konular.kategori_id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
