@@ -105,6 +105,67 @@ console.log(value);
 // IF WE DONT USE STRINGIFY THEN OUR VALUE WILL SET AS A STRING NOT ARRAY
 
 ______________________________________________________________________
+## ARROW FUNCTION
+
+const square1 = (x) => {
+    return x*x*x;
+}
+
+const square2 = x => x*x*x
+
+______________________________________________________________________
+## DESTRUCTING
+
+let langs = ["C++", "Java", "Python", "Rust"];
+let [lang1, lang2, lang3, lang4] = langs;
+console.log(lang1, lang2, lang3, lang4);
+
+// USEFUL TIPS
+const array=[100,200,300,400];
+const [val1,,,val2]=array;
+console.log(val1,val2);//100 400
+
+let a=3;
+let b=6;
+[a,b]=[b,a];
+console.log(a);//6
+console.log(b);//3
+
+// CALCULATE
+function calculate(a, b) {
+    const add = a + b;
+    const substract = a - b;
+    const multiply = a * b;
+    const divide = a / b;
+
+    return [add, substract, multiply, divide];
+}
+const [add, substract, multiply, divide] = calculate(5, 7);
+console.log(add, substract, multiply, divide)
+
+// FOR OBJECT
+const person = {
+    firstName: "Enver",
+    lastName: "Isayev",
+    salary: 5000,
+    age: 23
+}
+
+let { firstName, lastName, salary, age } = person;
+console.log(firstName, lastName, salary, age);
+
+______________________________________________________________________
+## MAP
+
+
+for (let [key, value] of map1) {
+    console.log(key, value);
+}
+
+______________________________________________________________________
+
+
+
 
 
 

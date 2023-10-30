@@ -66,7 +66,7 @@ function removeTodoToStorage(removeTodo) {
             todos.splice(index, 1); 
             // if you give the start index and tell remove just 1 item, 
             // then it will remove just itself
-            //! there is a something wrongm when you delete one item it deletes the second item familiar it
+            //! there is a something wrong when you delete one item it deletes the second item familiar it
         }
     })
     localStorage.setItem("todos", JSON.stringify(todos));
