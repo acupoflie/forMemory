@@ -1,0 +1,173 @@
+
+-------------------------------------
+TO DO LIST
+
+-- research scopes again
+-- SOLID principle
+-- Design Patterns
+
+
+
+
+-------------------------------------
+
+
+______________________________________________________________________
+## when we define variable with const then we cant add something or remove, but we can change values inside of object
+
+const user = {
+    username : "enver",
+    password : "123"  
+}
+
+user.password = "32432";
+
+console.log(user.password)
+
+______________________________________________________________________
+## TAKE VALUE FROM USER
+
+let yas = Number(prompt("yasinizi giriniz"));
+
+console.log(typeof yas)
+
+
+______________________________________________________________________
+## CONFIRM TAB
+
+let message = comfirm("Cikmak istediginizden emin misiniz");
+
+let message = prompt("bir deger girin");
+
+______________________________________________________________________
+## PARSE STRUCTURE
+
+let x = parseInt("22");
+let y = parseFloat("12.5");
+
+let b = (55).toString();
+
+______________________________________________________________________
+## SHORT IF ELSE STRUCTURE
+
+metin.charAt(i).toLowerCase === harf.toLowerCase ? sayi+=1 : sayi+=0;
+
+______________________________________________________________________
+## FOREACH METHOD
+
+let isimler = ["Dumbledore", "Enver", "Luna", "Mochi"];
+
+isimler.forEach(function(isim) {
+    console.log(isim);
+});
+
+______________________________________________________________________
+## INCLUDES
+
+cars.forEach(function(urun){
+    if(urun.isim.toUpperCase().includes(girilenUrunIsmi.toUpperCase(), 0));
+})
+
+______________________________________________________________________
+## QUERY SELECTOR
+
+document.querySelector("#todoClearButton");
+document.querySelectorAll("div:nth-child(even)");
+
+______________________________________________________________________
+## APPEND CHILD
+
+document.querySelector(".list-group").appendChild(todo5);
+
+______________________________________________________________________
+## EVENT LISTENER
+
+const clearButton = document.querySelector("#todoClearButton");
+
+clearButton.addEventListener("click", changeTitle);
+
+function changeTitle(e) {
+    console.log(e.type);
+    console.log(e.target);
+    cardTitle.textContent = e.target.value;
+}
+
+______________________________________________________________________
+## SET AND GET JSON VALUE TO SESSION STORAGE
+
+let names = ["Enver", "Busra", "Mochi", "Luna"];
+
+sessionStorage.setItem("names" ,JSON.stringify(names));
+let value = JSON.parse(sessionStorage.getItem("names"));
+
+console.log(value);
+
+// IF WE DONT USE STRINGIFY THEN OUR VALUE WILL SET AS A STRING NOT ARRAY
+
+______________________________________________________________________
+## ARROW FUNCTION
+
+const square1 = (x) => {
+    return x*x*x;
+}
+
+const square2 = x => x*x*x
+
+______________________________________________________________________
+## DESTRUCTING
+
+let langs = ["C++", "Java", "Python", "Rust"];
+let [lang1, lang2, lang3, lang4] = langs;
+console.log(lang1, lang2, lang3, lang4);
+
+// USEFUL TIPS
+const array=[100,200,300,400];
+const [val1,,,val2]=array;
+console.log(val1,val2);//100 400
+
+let a=3;
+let b=6;
+[a,b]=[b,a];
+console.log(a);//6
+console.log(b);//3
+
+// CALCULATE
+function calculate(a, b) {
+    const add = a + b;
+    const substract = a - b;
+    const multiply = a * b;
+    const divide = a / b;
+
+    return [add, substract, multiply, divide];
+}
+const [add, substract, multiply, divide] = calculate(5, 7);
+console.log(add, substract, multiply, divide)
+
+// FOR OBJECT
+const person = {
+    firstName: "Enver",
+    lastName: "Isayev",
+    salary: 5000,
+    age: 23
+}
+
+let { firstName, lastName, salary, age } = person;
+console.log(firstName, lastName, salary, age);
+
+______________________________________________________________________
+## MAP
+
+
+for (let [key, value] of map1) {
+    console.log(key, value);
+}
+
+______________________________________________________________________
+
+
+
+
+
+
+
+
