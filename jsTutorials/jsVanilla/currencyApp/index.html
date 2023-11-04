@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="container">
+        <div id="main">
+            <div class="header-wrapper">
+                <h4>Currency Calculator</h4>
+            </div>
+            <div class="content-wrapper">
+                <input id="amount" type="number" placeholder="Amount..">
+                <select id="firstCurrencyOption">
+                    <option selected>USD</option>
+                    <option>TRY</option>
+                    <option>EUR</option>
+                    <option>JPY</option>
+                    <option>RUB</option>
+                    <option>AUD</option>
+                </select>
+    
+                <i class="fa-solid fa-arrow-right"></i>
+                
+                <select id="secondCurrencyOption">
+                    <option>USD</option>
+                    <option selected>TRY</option>
+                    <option>EUR</option>
+                    <option>JPY</option>
+                    <option>RUB</option>
+                    <option>AUD</option>
+                </select>
+    
+                <input id="result" type="number" placeholder="Result..." readonly>
+                <span>Copyright - Enver Isayev</span>
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="currency.js"></script>
+    <script src="app.js"></script>
+    
+</body>
+</html>
