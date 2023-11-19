@@ -1,0 +1,9 @@
+
+
+## TIP HOW TO REACH A HTML CONTENT PLACEHOLDER FROM NODE JS SERVER
+
+<h3>{{%CONTENT%}}</h3> // here you can type whatever you want like placeholder
+
+if(path === "/" || path.toLocaleLowerCase() === "/home") {
+    response.end(html.replace('{{%CONTENT%}}', "Home Page"))
+}
