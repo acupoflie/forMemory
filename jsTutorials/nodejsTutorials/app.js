@@ -1,12 +1,16 @@
 
-
+//  CORE MODULES
 const readline = require('readline')
 const fs = require('fs')
 const http = require('http')
 const path = require('path')
 const { json } = require('stream/consumers')
 const url = require('url')
+const events = require('events')
+
+//   USER DEFINED MODULES
 const replaceHtml = require('./modules/replaceHtml')
+const user = require('./modules/user')
 
 //TODO - WRITE AND READ CONSOLE
 //********************************************* */
@@ -56,10 +60,10 @@ const replaceHtml = require('./modules/replaceHtml')
 
 //TODO - SERVER & ROUTING
 
-const html = fs.readFileSync('./template/index.html', 'utf-8')
-let products = JSON.parse(fs.readFileSync('./data/products.json', 'utf-8'))
-let productListHtml = fs.readFileSync('./template/product-list.html', 'utf-8')
-let productDetailHtml = fs.readFileSync('./template/product-details.html', 'utf-8')
+// const html = fs.readFileSync('./template/index.html', 'utf-8')
+// let products = JSON.parse(fs.readFileSync('./data/products.json', 'utf-8'))
+// let productListHtml = fs.readFileSync('./template/product-list.html', 'utf-8')
+// let productDetailHtml = fs.readFileSync('./template/product-details.html', 'utf-8')
 
 // let productsHtmlArray = products.map((prod) => {
 //     let output = productListHtml.replace('{{%IMAGE%}}', prod.productImage)
@@ -97,58 +101,87 @@ let productDetailHtml = fs.readFileSync('./template/product-details.html', 'utf-
 
 const server = http.createServer();
 
-server.on('request', (request, response) => {
+// server.on('request', (request, response) => {
     
-    let {query, pathname: path} = url.parse(request.url, true)
+//     let {query, pathname: path} = url.parse(request.url, true)
 
-    // let path = request.url;
+//     // let path = request.url;
 
-    // HOME PAGE
-    if (path === "/" || path.toLocaleLowerCase() === "/home") {
-        response.writeHead(200, {
-            'Content-type': 'text/html',
-            'my-header': 'hello mother fucker'
-        })
-        response.end(html.replace('{{%CONTENT%}}', "Home Page"))
-        // ABOUT PAGE
-    } else if (path.toLocaleLowerCase() === "/about") {
-        response.writeHead(200, {
-            'Content-type': 'text/html',
-            'my-header': 'hello mother fucker'
-        })
-        response.end(html.replace('{{%CONTENT%}}', "About Page"))
-        // CONTACT PAGE
-    } else if (path.toLocaleLowerCase() === "/contact") {
-        response.writeHead(200, {
-            'Content-type': 'text/html',
-            'my-header': 'hello mother fucker'
-        })
-        response.end(html.replace('{{%CONTENT%}}', "Contact Page"))
-        // PRODUCTS PAGE
-    } else if (path.toLocaleLowerCase() === "/products") {
-        if(!query.id) {
-            let productsHtmlArray = products.map((prod) => {
-                return replaceHtml(productListHtml, prod)
-            })
-            let productResponse = html.replace('{{%CONTENT%}}', productsHtmlArray.join(','))
-            response.writeHead(200, {'Content-type' : 'text/html'})
-            response.end(productResponse)
-        } else {
-            let prod = products[query.id]
-            let productDetailResponseHtml = replaceHtml(productDetailHtml, prod)
-            response.end(html.replace('{{%CONTENT%}}', productDetailResponseHtml))
-        }
-        // console.log(productsHtmlArray.join(''))
-        // ERROR PAGE
-    } else {
-        response.writeHead(404, {
-            'Content-type': 'text/html',
-            'my-header': 'hello mother fucker'
-        })
-        response.end(html.replace('{{%CONTENT%}}', "Error 404: Page not found"))
-    }
-})
+//     // HOME PAGE
+//     if (path === "/" || path.toLocaleLowerCase() === "/home") {
+//         response.writeHead(200, {
+//             'Content-type': 'text/html',
+//             'my-header': 'hello mother fucker'
+//         })
+//         response.end(html.replace('{{%CONTENT%}}', "Home Page"))
+//         // ABOUT PAGE
+//     } else if (path.toLocaleLowerCase() === "/about") {
+//         response.writeHead(200, {
+//             'Content-type': 'text/html',
+//             'my-header': 'hello mother fucker'
+//         })
+//         response.end(html.replace('{{%CONTENT%}}', "About Page"))
+//         // CONTACT PAGE
+//     } else if (path.toLocaleLowerCase() === "/contact") {
+//         response.writeHead(200, {
+//             'Content-type': 'text/html',
+//             'my-header': 'hello mother fucker'
+//         })
+//         response.end(html.replace('{{%CONTENT%}}', "Contact Page"))
+//         // PRODUCTS PAGE
+//     } else if (path.toLocaleLowerCase() === "/products") {
+//         if(!query.id) {
+//             let productsHtmlArray = products.map((prod) => {
+//                 return replaceHtml(productListHtml, prod)
+//             })
+//             let productResponse = html.replace('{{%CONTENT%}}', productsHtmlArray.join(','))
+//             response.writeHead(200, {'Content-type' : 'text/html'})
+//             response.end(productResponse)
+//         } else {
+//             let prod = products[query.id]
+//             let productDetailResponseHtml = replaceHtml(productDetailHtml, prod)
+//             response.end(html.replace('{{%CONTENT%}}', productDetailResponseHtml))
+//         }
+//         // console.log(productsHtmlArray.join(''))
+//         // ERROR PAGE
+//     } else {
+//         response.writeHead(404, {
+//             'Content-type': 'text/html',
+//             'my-header': 'hello mother fucker'
+//         })
+//         response.end(html.replace('{{%CONTENT%}}', "Error 404: Page not found"))
+//     }
+// })
 
 server.listen(8000, "127.0.0.1", () => {
     console.log("Server has started")
+})
+
+
+//TODO - EMITTING & HANDLING EVENT (OBSERVER PATTERN)
+
+// // let myEmitter = new events.EventEmitter();
+// let myEmitter = new user();
+
+// myEmitter.on('userCreated', (id, name) => {
+//     return console.log(`New user ${name} with ID ${id} created`)
+// })
+
+// myEmitter.on('userCreated', (id, name) => {
+//     return console.log(`New user ${name} with ID ${id} added to database`)
+// })
+
+// myEmitter.emit('userCreated', 101, "bich")
+
+
+//TODO - STREAMS IN FILESYSTEM
+
+server.on('request', (req, res) => {
+    fs.readFile('./files/large-file.txt', (err, data) => {
+        if(err) {
+            res.end("Something went wrong")
+            return;
+        }
+        res.end(data)
+    })
 })
