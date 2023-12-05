@@ -101,8 +101,12 @@ const user = require('./modules/user')
 
 const server = http.createServer();
 
+server.listen(8000, "127.0.0.1", () => {
+    console.log("Server has started")
+})
+
 // server.on('request', (request, response) => {
-    
+
 //     let {query, pathname: path} = url.parse(request.url, true)
 
 //     // let path = request.url;
@@ -153,10 +157,6 @@ const server = http.createServer();
 //     }
 // })
 
-server.listen(8000, "127.0.0.1", () => {
-    console.log("Server has started")
-})
-
 
 //TODO - EMITTING & HANDLING EVENT (OBSERVER PATTERN)
 
@@ -176,6 +176,8 @@ server.listen(8000, "127.0.0.1", () => {
 
 //TODO - STREAMS IN FILESYSTEM
 
+// FIRST SOLUTION
+/*
 server.on('request', (req, res) => {
     fs.readFile('./files/large-file.txt', (err, data) => {
         if(err) {
@@ -184,4 +186,32 @@ server.on('request', (req, res) => {
         }
         res.end(data)
     })
-})
+}) 
+*/
+
+// SECOND SOLUTION
+
+// server.on('request', (req, res) => {
+
+//     let rs = fs.createReadStream('./files/large-file.txt')
+
+//     rs.on('data', (chunk) => {
+//         res.write(chunk)
+//     })
+
+//     rs.on('end', () => {
+//         res.end()
+//     })
+
+//     rs.on('error', (err) => {
+//         res.end(err.message)
+//     })
+// })
+
+
+// THIRD SOLUTION
+
+// server.on('request', (req, res) => {
+//     let rs = fs.createReadStream('./files/large-file.txt')
+//     rs.pipe(res)
+// })
