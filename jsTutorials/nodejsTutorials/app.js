@@ -219,17 +219,27 @@ server.on('request', (req, res) => {
 
 //TODO - Event Loop of LibUV
 
+// top level (first will exec)
 console.log("Program has started")
 
-// First phase
-setTimeout(() => {
-    console.log("timer callback executed")
-}, 0);
+// second phase (second will exec)
+fs.readFile('./files/append.txt', () => {
+    console.log("file read completed")
 
 
-// Third phase
-setImmediate(() => {
-    console.log("setImmediate executed")
+    // First phase (fifth will exec)
+    setTimeout(() => {
+        console.log("timer callback executed")
+    }, 0);
+
+    // Third phase (fourth will exec)
+    setImmediate(() => {
+        console.log("setImmediate executed")
+    })
+
+    // independent (third will exec)
+    process.nextTick(() => {console.log("nexttick has ben executed")})
 })
 
+//top level (first will exec)
 console.log("Program has completed")
