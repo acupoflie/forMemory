@@ -99,11 +99,11 @@ const user = require('./modules/user')
 //      CONTENT
 // });
 
-const server = http.createServer();
+// const server = http.createServer();
 
-server.listen(8000, "127.0.0.1", () => {
-    console.log("Server has started")
-})
+// server.listen(8000, "127.0.0.1", () => {
+//     console.log("Server has started")
+// })
 
 // server.on('request', (request, response) => {
 
@@ -217,6 +217,19 @@ server.on('request', (req, res) => {
 // })
 
 
+//TODO - Event Loop of LibUV
 
-// fuck this life 
-// again fuck it 
+console.log("Program has started")
+
+// First phase
+setTimeout(() => {
+    console.log("timer callback executed")
+}, 0);
+
+
+// Third phase
+setImmediate(() => {
+    console.log("setImmediate executed")
+})
+
+console.log("Program has completed")
