@@ -12,10 +12,33 @@ app.use(express.json())
 app.get('/api/v1/movies', (req, res) => {
     res.status(200).json({
         // Enveloping JSON data, JSEND format
-        status : "secces",
+        status : "success",
         count : movies.length,
         data : {
             movies : movies
+        }
+    })
+})
+
+// GET with route parameter
+app.get('/api/v1/movies/:id', (req, res) => {
+    // console.log(req.params);
+    const id = req.params.id * 1; // convert o number, also: +req.params.id
+
+    let movie = movies.find(elem => elem.id === id)
+
+    if(!movie) {
+        return res.status(404).json({
+            status: "fail",
+            message: `Movie with ID ${id} not found`
+
+        })
+    }
+
+    res.status(200).json({
+        status: "success",
+        data : {
+            movie: movie
         }
     })
 })
@@ -36,7 +59,6 @@ app.post('/api/v1/movies', (req, res) => {
             }
         })
     })
-
     // res.send('Created')
 })
 
