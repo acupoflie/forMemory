@@ -23,24 +23,24 @@ app.get('/api/v1/movies', (req, res) => {
 // GET with route parameter
 app.get('/api/v1/movies/:id', (req, res) => {
     // console.log(req.params);
-    const id = req.params.id * 1; // convert o number, also: +req.params.id
+    const id = req.params.id * 1; // convert to number, also: +req.params.id
 
     let movie = movies.find(elem => elem.id === id)
 
     if(!movie) {
         return res.status(404).json({
             status: "fail",
-            message: `Movie with ID ${id} not found`
-
+            message: `Cannot find movie with id ${id}`
         })
     }
 
     res.status(200).json({
         status: "success",
-        data : {
+        data: {
             movie: movie
         }
     })
+
 })
 
 // POST request
@@ -60,6 +60,33 @@ app.post('/api/v1/movies', (req, res) => {
         })
     })
     // res.send('Created')
+})
+
+app.patch('/api/v1/movies/:id', (req, res) => {
+    const id = +req.params.id;
+    const movieToUpdate = movies.find(elem => elem.id === id);
+
+    if(!movieToUpdate) {
+        return res.status(404).json({
+            status: "fail",
+            message: `Cannot find movie with id ${id}`
+        })
+    }
+
+    const index = movies.indexOf(movieToUpdate);
+
+    Object.assign(movieToUpdate, req.body);
+
+    movies[index] = movieToUpdate;
+
+    fs.writeFile('./data/movies.json', JSON.stringify(movies), (err) => {
+        res.status(200).json({
+            status: "success",
+            data : {
+                movie: movieToUpdate
+            }
+        })
+    })
 })
 
 // CREATE SERVER
