@@ -3,6 +3,23 @@ const fs = require('fs')
 
 let movies = JSON.parse(fs.readFileSync('./data/movies.json', 'utf-8'));
 
+exports.checkId = (req, res, next, value) => {
+
+    console.log('Movie id is ' + value);
+
+    let movie = movies.find(elem => elem.id === +value)
+
+    if (!movie) {
+        return res.status(404).json({
+            status: "fail",
+            message: `Cannot find movie with id ${value}`
+        })
+    }
+
+    next();
+}
+
+// get all movies
 exports.getAllMovies = (req, res) => {
     res.status(200).json({
         // Enveloping JSON data, JSEND format
@@ -15,18 +32,19 @@ exports.getAllMovies = (req, res) => {
     })
 }
 
+// getting movie by id
 exports.getMovie = (req, res) => {
     // console.log(req.params);
     const id = req.params.id * 1; // convert to number, also: +req.params.id
 
     let movie = movies.find(elem => elem.id === id)
 
-    if (!movie) {
-        return res.status(404).json({
-            status: "fail",
-            message: `Cannot find movie with id ${id}`
-        })
-    }
+    // if (!movie) {
+    //     return res.status(404).json({
+    //         status: "fail",
+    //         message: `Cannot find movie with id ${id}`
+    //     })
+    // }
 
     res.status(200).json({
         status: "success",
@@ -37,6 +55,7 @@ exports.getMovie = (req, res) => {
 
 }
 
+// creating movie
 exports.createMovie = (req, res) => {
     // console.log(req.body)
     const newID = movies[movies.length - 1].id + 1;
@@ -55,16 +74,17 @@ exports.createMovie = (req, res) => {
     // res.send('Created')
 }
 
+// updating movie
 exports.updateMovie = (req, res) => {
     const id = +req.params.id;
     const movieToUpdate = movies.find(elem => elem.id === id);
 
-    if (!movieToUpdate) {
-        return res.status(404).json({
-            status: "fail",
-            message: `Cannot find movie with id ${id}`
-        })
-    }
+    // if (!movieToUpdate) {
+    //     return res.status(404).json({
+    //         status: "fail",
+    //         message: `Cannot find movie with id ${id}`
+    //     })
+    // }
 
     const index = movies.indexOf(movieToUpdate);
 
@@ -82,16 +102,17 @@ exports.updateMovie = (req, res) => {
     })
 }
 
+// deleting movie
 exports.deleteMovie = (req, res) => {
     const id = +req.params.id;
     let movieToDelete = movies.find(el => el.id === id);
 
-    if (!movieToDelete) {
-        return res.status(404).json({
-            status: "fail",
-            message: `Cannot find a movie with id ${id}`
-        })
-    }
+    // if (!movieToDelete) {
+    //     return res.status(404).json({
+    //         status: "fail",
+    //         message: `Cannot find a movie with id ${id}`
+    //     })
+    // }
 
     const index = movies.indexOf(movieToDelete);
 

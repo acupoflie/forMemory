@@ -3,6 +3,8 @@ const express = require('express');
 const moviesController = require('../controllers/moviesController');
 const router = express.Router();
 
+router.param('id', moviesController.checkId)
+
 // Making routers in another way
 
 // moviesRouter.route('/api/v1/movies')
