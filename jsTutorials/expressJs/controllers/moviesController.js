@@ -3,6 +3,7 @@ const fs = require('fs')
 
 let movies = JSON.parse(fs.readFileSync('./data/movies.json', 'utf-8'));
 
+// checking does movie exist for id router
 exports.checkId = (req, res, next, value) => {
 
     console.log('Movie id is ' + value);
@@ -16,6 +17,17 @@ exports.checkId = (req, res, next, value) => {
         })
     }
 
+    next();
+}
+
+// checking does body exist in post method
+exports.validateBody = (req, res, next) => {
+    if(!req.body.name || !req.body.releaseYear) {
+        return res.status(400).json({
+            status: "fail",
+            message: "Not valid movie data"
+        })
+    }
     next();
 }
 

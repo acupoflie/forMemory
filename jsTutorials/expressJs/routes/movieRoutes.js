@@ -10,7 +10,7 @@ router.param('id', moviesController.checkId)
 // moviesRouter.route('/api/v1/movies')
 router.route('/')
     .get(moviesController.getAllMovies)
-    .post(moviesController.createMovie);
+    .post(moviesController.validateBody, moviesController.createMovie);
 
 // moviesRouter.route('/api/v1/movies/:id')
 router.route('/:id')
