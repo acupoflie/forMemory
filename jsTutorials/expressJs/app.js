@@ -15,9 +15,12 @@ const logger = function(req, res, next) {
 
 // Using middlewares
 app.use(express.json())
-app.use(morgan('dev'))
+if(process.env.NODE_ENV === "development") {
+    app.use(morgan('dev'))
+}
+app.use(express.static('./public'))
 app.use(logger)
-app.use((req, res, next) => {
+app.use((req, res, next) => { 
     req.requestedAt = new Date().toISOString();
     next();
 });
