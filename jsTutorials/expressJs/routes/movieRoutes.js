@@ -3,6 +3,7 @@ const express = require('express');
 const moviesController = require('../controllers/moviesController');
 const router = express.Router();
 
+// param middleware
 router.param('id', moviesController.checkId)
 
 // Making routers in another way

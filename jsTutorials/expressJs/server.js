@@ -13,3 +13,6 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log("server has started");
 })
+
+// start mongodb as a background process
+// mongod --config /usr/local/etc/mongod.conf --fork
