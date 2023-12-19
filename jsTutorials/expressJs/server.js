@@ -16,3 +16,5 @@ app.listen(port, () => {
 
 // start mongodb as a background process
 // mongod --config /usr/local/etc/mongod.conf --fork
+
+// learning mongodb compassss
