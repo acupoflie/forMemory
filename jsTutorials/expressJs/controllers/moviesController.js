@@ -8,7 +8,25 @@ const Movie = require('../models/movieModel')
 
 exports.getAllMovies = async (req, res) => {
     try {
-        const movies = await Movie.find();
+
+        // for Mongoose 6.0 or less
+        // const excludeFields = ['sort', 'page', 'limit', 'fields'];
+        // // creating 'shallow copy' of a object with spread operator
+        // const queryObj = {...req.query};
+
+        // excludeFields.forEach((el) => {
+        //     delete queryObj[el]
+        // });
+
+        // const movies = await Movie.find(queryObj);
+
+        // const movies = await Movie.find()
+        //                 .where('duration')
+        //                 .equals(req.query.duration)
+        //                 .where('ratings')
+        //                 .equals(req.query.ratings);
+
+        const movies = await Movie.find(req.query)
 
         res.status(200).json({
             status: "succesfull",
