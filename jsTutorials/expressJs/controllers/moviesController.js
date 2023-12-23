@@ -20,13 +20,35 @@ exports.getAllMovies = async (req, res) => {
 
         // const movies = await Movie.find(queryObj);
 
+        //? filtering by mongoose special commands
         // const movies = await Movie.find()
         //                 .where('duration')
-        //                 .equals(req.query.duration)
+        //                 .gte(req.query.duration)
         //                 .where('ratings')
-        //                 .equals(req.query.ratings);
+        //                 .gte(req.query.ratings)
+        //                 .where('price')
+        //                 .lte(req.query.price)
 
-        const movies = await Movie.find(req.query)
+        // Filtering query strings
+        let queryStr = JSON.stringify(req.query)
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
+        const queryObj = JSON.parse(queryStr);
+
+        // let movies = await Movie.find(queryObj)
+        //! this line is important for Mongoose 7.0 or later
+        delete queryObj.sort
+        let query = Movie.find(queryObj)
+
+        // Sorting logic
+        if(req.query.sort) {
+            const sortBy = req.query.sort.split(',').join(' ');
+            console.log(sortBy)
+            query = query.sort(sortBy)
+        } else {
+            query = query.sort('-createdAt');
+        }
+
+        const movies = await query;
 
         res.status(200).json({
             status: "succesfull",
@@ -119,7 +141,7 @@ exports.deleteMovie = async (req, res) => {
 
 
 
-// // checking does movie exist for id router
+//? checking does movie exist for id router
 // exports.checkId = (req, res, next, value) => {
 
 //     console.log('Movie id is ' + value);
@@ -137,7 +159,7 @@ exports.deleteMovie = async (req, res) => {
 // }
 
 
-// // checking does body exist in post method
+//? checking does body exist in post method
 // exports.validateBody = (req, res, next) => {
 //     if(!req.body.name || !req.body.releaseYear) {
 //         return res.status(400).json({
@@ -148,7 +170,7 @@ exports.deleteMovie = async (req, res) => {
 //     next();
 // }
 
-// get all movies
+//? get all movies
 // exports.getAllMovies = (req, res) => {
 //     res.status(200).json({
 //         // Enveloping JSON data, JSEND format
@@ -161,7 +183,7 @@ exports.deleteMovie = async (req, res) => {
 //     })
 // }
 
-// // getting movie by id
+//? getting movie by id
 // exports.getMovie = (req, res) => {
 //     // console.log(req.params);
 //     const id = req.params.id * 1; // convert to number, also: +req.params.id
@@ -184,7 +206,7 @@ exports.deleteMovie = async (req, res) => {
 
 // }
 
-// // creating movie
+//? creating movie
 // exports.createMovie = (req, res) => {
 //     // console.log(req.body)
 //     const newID = movies[movies.length - 1].id + 1;
@@ -203,7 +225,7 @@ exports.deleteMovie = async (req, res) => {
 //     // res.send('Created')
 // }
 
-// // updating movie
+//? updating movie
 // exports.updateMovie = (req, res) => {
 //     const id = +req.params.id;
 //     const movieToUpdate = movies.find(elem => elem.id === id);
@@ -231,7 +253,7 @@ exports.deleteMovie = async (req, res) => {
 //     })
 // }
 
-// // deleting movie
+//? deleting movie
 // exports.deleteMovie = (req, res) => {
 //     const id = +req.params.id;
 //     let movieToDelete = movies.find(el => el.id === id);
