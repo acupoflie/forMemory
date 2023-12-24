@@ -33,7 +33,8 @@ const movieSchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now()
+        default: Date.now(),
+        // select: false - in order to exclude the prop from the responses
     },
     genres: {
         type: [String],

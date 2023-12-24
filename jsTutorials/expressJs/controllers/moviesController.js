@@ -35,17 +35,25 @@ exports.getAllMovies = async (req, res) => {
         const queryObj = JSON.parse(queryStr);
 
         // let movies = await Movie.find(queryObj)
-        //! this line is important for Mongoose 7.0 or later
+        //! these lines is important for Mongoose 7.0 or later
         delete queryObj.sort
+        delete queryObj.fields
         let query = Movie.find(queryObj)
 
         // Sorting logic
         if(req.query.sort) {
             const sortBy = req.query.sort.split(',').join(' ');
-            console.log(sortBy)
             query = query.sort(sortBy)
         } else {
             query = query.sort('-createdAt');
+        }
+
+        // Limiting fields
+        if(req.query.fields) {
+            const fields = req.query.fields.split(',').join(' ');
+            query = query.select(fields)
+        } else {
+            query = query.select('-__v')
         }
 
         const movies = await query;
