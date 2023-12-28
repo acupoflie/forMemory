@@ -214,7 +214,7 @@ exports.getMovieByGenre = async (req, res) => {
     try {
 
         const genre = req.params.genre;
-        const movies = await Movie.aggregate([
+        const movies = Movie.aggregate([
             { $unwind: '$genres' },
             { $group: {
                 _id: '$genres',
@@ -223,14 +223,21 @@ exports.getMovieByGenre = async (req, res) => {
             } },
             { $addFields: {genre: "$_id"}},
             { $project: {_id: 0}},
-            { $sort: {movieCount: -1}}
+            { $sort: {movieCount: -1}},
+            // { $limit: 6}
+            { $match: {genre: genre}}
         ])
+
+        console.log(movies.pipeline().at(5).$match);
+
+
+        const data = await movies;
 
         res.status(200).json({
             status: "successful",
             length: movies.length,
             data: {
-                movies
+                data
             }
         })
     } catch (err) {

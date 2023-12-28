@@ -1,5 +1,6 @@
 
 const mongoose = require('mongoose')
+const fs = require('fs');
 
 const movieSchema = new mongoose.Schema({
     name: {
@@ -55,7 +56,32 @@ const movieSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: [true, "Price is required"]
-    }
+    },
+    createdBy: String
+}, {
+    toJSON: {virtuals: true},
+    toObject: {virtuals: true}
+});
+
+// before the document saved in the database
+movieSchema.pre('save', function(next) {
+    this.createdBy = 'SIR';
+    next();
+});
+
+movieSchema.pre('save', function(next) {
+    // Another logic
+});
+
+// this middleware cant access 'this'
+movieSchema.post('save', function(doc, next) {
+    const content = `A new movie document name ${doc.name} has been created by ${doc.createdBy}\n`;
+    fs.writeFileSync('./log/log.txt', content, {flag: 'a'}, (err) => console.log(err));
+    next()
+})
+
+movieSchema.virtual('durationInHours').get(function() {
+    return this.duration / 60;
 })
 
 const Movie = mongoose.model('Movie', movieSchema)
