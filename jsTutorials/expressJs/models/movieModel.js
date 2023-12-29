@@ -73,6 +73,12 @@ movieSchema.pre('save', function(next) {
     next();
 });
 
+// this middleware cant access 'this'
+movieSchema.post('save', function(doc, next) {
+    const content = `A new movie document name ${doc.name} has been created by ${doc.createdBy}\n`;
+    fs.writeFileSync('./log/log.txt', content, {flag: 'a'}, (err) => console.log(err));
+    next()
+})
 
 // QUERY MIDDLEWARE (here this keyword points the query object)
 movieSchema.pre(/^find/, function(next) {
@@ -88,13 +94,11 @@ movieSchema.post(/^find/, function(docs, next) {
     const content = `Query took ${this.endTime - this.startTime} milliseconds to fetch the documents \n`
     fs.writeFileSync('./log/log.txt', content, {flag: 'a'}, (err) => console.log(err));
     next();
-}) 
+});
 
-// this middleware cant access 'this'
-movieSchema.post('save', function(doc, next) {
-    const content = `A new movie document name ${doc.name} has been created by ${doc.createdBy}\n`;
-    fs.writeFileSync('./log/log.txt', content, {flag: 'a'}, (err) => console.log(err));
-    next()
+movieSchema.pre('aggregate', function(next) {
+    console.log(this.pipeline().unshift({$match: {releaseDate: {$lte: new Date()}}}))
+    next();
 })
 
 const Movie = mongoose.model('Movie', movieSchema)
