@@ -1,3 +1,2 @@
-A new movie document name Twilight has been created by SIR
-A new movie document name Test 1 has been created by SIR
-A new movie document name Test 2 has been created by SIR
+Query took 196 milliseconds to fetch the documents 
+Query took 487 milliseconds to fetch the documents 

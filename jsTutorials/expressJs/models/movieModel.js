@@ -63,25 +63,38 @@ const movieSchema = new mongoose.Schema({
     toObject: {virtuals: true}
 });
 
-// before the document saved in the database
+movieSchema.virtual('durationInHours').get(function() {
+    return this.duration / 60;
+})
+
+// before the document saved in the database (here this keyword points current document)
 movieSchema.pre('save', function(next) {
     this.createdBy = 'SIR';
     next();
 });
 
-movieSchema.pre('save', function(next) {
-    // Another logic
+
+// QUERY MIDDLEWARE (here this keyword points the query object)
+movieSchema.pre(/^find/, function(next) {
+    this.find({ releaseDate: {$lte: Date.now()}})
+    this.startTime = Date.now();
+    next();
 });
+
+movieSchema.post(/^find/, function(docs, next) {
+    this.find({ releaseDate: {$lte: Date.now()}});
+    this.endTime = Date.now()
+
+    const content = `Query took ${this.endTime - this.startTime} milliseconds to fetch the documents \n`
+    fs.writeFileSync('./log/log.txt', content, {flag: 'a'}, (err) => console.log(err));
+    next();
+}) 
 
 // this middleware cant access 'this'
 movieSchema.post('save', function(doc, next) {
     const content = `A new movie document name ${doc.name} has been created by ${doc.createdBy}\n`;
     fs.writeFileSync('./log/log.txt', content, {flag: 'a'}, (err) => console.log(err));
     next()
-})
-
-movieSchema.virtual('durationInHours').get(function() {
-    return this.duration / 60;
 })
 
 const Movie = mongoose.model('Movie', movieSchema)
