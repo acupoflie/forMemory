@@ -96,6 +96,7 @@ movieSchema.post(/^find/, function(docs, next) {
     next();
 });
 
+// agregate middleware
 movieSchema.pre('aggregate', function(next) {
     console.log(this.pipeline().unshift({$match: {releaseDate: {$lte: new Date()}}}))
     next();
