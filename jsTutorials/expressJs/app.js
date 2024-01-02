@@ -31,6 +31,14 @@ app.use((req, res, next) => {
 // app.patch('/api/v1/movies/:id', updateMovie);
 // app.delete('/api/v1/movies/:id', deleteMovie);
 
-app.use('/api/v1/movies', moviesRouter)
+app.use('/api/v1/movies', moviesRouter);
+
+// should come after all routes
+app.all('*', (req, res, next) => {
+    res.status(404).json({
+        status: "fail",
+        message: `Can't find ${req.originalUrl} on the server`
+    })
+})
 
 module.exports = app;
