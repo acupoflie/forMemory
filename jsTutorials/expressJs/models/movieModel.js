@@ -1,13 +1,17 @@
 
 const mongoose = require('mongoose')
 const fs = require('fs');
+const validator = require('validator')
 
 const movieSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Name is required'],
         unique: true,
-        trim: true
+        maxlength: [100, "Movie name must not have more than 100 characters"],
+        minlength: [4, "Movie name must not have at least than 4 characters"],
+        trim: true,
+        validate: [validator.isAlpha, "Name should only contains alphabet"]
     },
     description: {
         type: String,
@@ -20,6 +24,18 @@ const movieSchema = new mongoose.Schema({
     }, 
     ratings: {
         type: Number,
+        //? custom validator
+        validate: {
+            validator: function(value) {
+                //! dont use this keyword inside of this function, it gonna work just when creating new document
+                return value >= 1 && value <= 10;
+            },
+            message: "Ratings {{VALUE}} should be above 1 and below 10"
+        }
+
+        //? built-in validator
+        // min: [1, "Ratings must be 1.0 or above"],
+        // max: [10, "Ratings must be 10 or below"]
         // default: 1.0
     },
     totalRating: {
@@ -39,7 +55,11 @@ const movieSchema = new mongoose.Schema({
     },
     genres: {
         type: [String],
-        required: [true, "Genres is required"]
+        required: [true, "Genres is required"],
+        enum: {
+            values: ["Action","Adventure","Sci-Fi","Thriller","Crime","Drama","Comedy","Romance","Biography"],
+            message: "This genre does not exist"
+        }
     },
     directors: {
         type: [String], 
