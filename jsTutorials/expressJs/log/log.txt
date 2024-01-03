@@ -2,3 +2,4 @@ Query took 196 milliseconds to fetch the documents
 Query took 487 milliseconds to fetch the documents 
 Query took 180 milliseconds to fetch the documents 
 A new movie document name Test Movie 1 has been created by SIR
+Query took 1571 milliseconds to fetch the documents 
