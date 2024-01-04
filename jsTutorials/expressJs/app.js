@@ -4,6 +4,8 @@ const { create } = require('domain');
 const express = require('express');
 const morgan = require('morgan');
 const moviesRouter = require('./routes/movieRoutes');
+const CustomError = require('./utils/CustomError');
+const globalErrorHandler = require('./controllers/errorController')
 
 let app = express();
 
@@ -36,25 +38,23 @@ app.use('/api/v1/movies', moviesRouter);
 // should come after all routes
 app.all('*', (req, res, next) => {
 
-    const err = new Error(`Can't find ${req.originalUrl} on the server`);
-    err.status = 'fail';
-    err.statusCode = 404;
-    next(err);
-
     // res.status(404).json({
     //     status: "fail",
     //     message: `Can't find ${req.originalUrl} on the server`
     // })
+
+
+    // const err = new Error(`Can't find ${req.originalUrl} on the server`);
+    // err.status = 'fail';
+    // err.statusCode = 404;
+
+
+    const err = new CustomError(`Can't find ${req.originalUrl} on the server`, 404)
+
+    next(err);
 })
 
 // global error handling middleware
-app.use((error, req, res, next) => {
-    error.statusCode = error.statusCode || 500;
-    error.status = error.status || 'errorr'
-    res.status(error.statusCode).json({
-        status: error.statusCode,
-        message: error.message
-    })
-})
+app.use(globalErrorHandler);
 
 module.exports = app;
