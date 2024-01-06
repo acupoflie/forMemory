@@ -5,3 +5,5 @@ A new movie document name Test Movie 1 has been created by SIR
 Query took 1571 milliseconds to fetch the documents 
 Query took 219 milliseconds to fetch the documents 
 Query took 714 milliseconds to fetch the documents 
+Query took 177 milliseconds to fetch the documents 
+A new movie document name We are the millers has been created by SIR

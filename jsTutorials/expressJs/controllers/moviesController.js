@@ -5,6 +5,7 @@
 
 const Movie = require('../models/movieModel');
 const ApiFeatures = require('../utils/apiFeatures');
+const asyncErrorHandler = require('../utils/asyncErrorHandler')
 
 
 exports.getHighestRated = (req, res, next) => {
@@ -14,14 +15,13 @@ exports.getHighestRated = (req, res, next) => {
     next();
 }
 
-exports.getAllMovies = async (req, res) => {
-    try {
+exports.getAllMovies = asyncErrorHandler( async (req, res, next) => {
 
         const features = new ApiFeatures(Movie.find(), req.query)
-                                            .sort()
-                                            .filter()
-                                            .limitFields()
-                                            .paginate();
+            .sort()
+            .filter()
+            .limitFields()
+            .paginate();
         const movies = await features.query;
 
         // for Mongoose 6.0 or less
@@ -95,17 +95,11 @@ exports.getAllMovies = async (req, res) => {
                 movies
             }
         })
-    } catch (err) {
-        res.status(404).json({
-            status: "fail",
-            message: err.message
-        })
-    }
-}
+})
 
-exports.getMovie = async (req, res) => {
+exports.getMovie = asyncErrorHandler( async (req, res, next) => {
     // const movie = await Movie.find({_id: req.param.id})
-    try {
+    
         const movie = await Movie.findById(req.params.id)
 
         res.status(200).json({
@@ -114,37 +108,29 @@ exports.getMovie = async (req, res) => {
                 movie
             }
         })
-    } catch (err) {
-        res.status(404).json({
-            status: "fail",
-            message: err.message
-        })
-    }
-}
+})
 
-exports.createMovie = async (req, res) => {
+exports.createMovie = asyncErrorHandler(async (req, res, next) => {
     // const testMovie = new Movie({})
     // testMovie.save()
-    try {
-        const movie = await Movie.create(req.body)
 
-        res.status(201).json({
-            status: "success",
-            data: {
-                movie
-            }
-        })
-    } catch (err) {
-        res.status(400).json({
-            status: "fail",
-            message: err.message
-        })
-    }
+    // try {
+    // } catch (err) {
+    // const error = new CustomError(err.message, 400)
+    // next(error);
 
-}
+    const movie = await Movie.create(req.body)
 
-exports.updateMovie = async (req, res) => {
-    try {
+    res.status(201).json({
+        status: "success",
+        data: {
+            movie
+        }
+    })
+})
+
+exports.updateMovie = asyncErrorHandler( async (req, res, next) => {
+
         const updateMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
 
         res.status(200).json({
@@ -153,45 +139,34 @@ exports.updateMovie = async (req, res) => {
                 movie: updateMovie
             }
         })
-    } catch (err) {
-        res.status(404).json({
-            status: "fail",
-            message: err.message
-        })
-    }
-}
+})
 
-exports.deleteMovie = async (req, res) => {
-    try {
+exports.deleteMovie = asyncErrorHandler( async (req, res, next) => {
         await Movie.findByIdAndDelete(req.params.id);
 
         res.status(204).json({
             status: "successful",
             data: null
         })
-    } catch (err) {
-        res.status(404).json({
-            status: "fail",
-            message: err.message
-        })
-    }
-}
+})
 
 // Aggregation
-exports.getMovieStats = async (req, res) => {
-    try {
+exports.getMovieStats = asyncErrorHandler( async (req, res, next) => {
+
         const stats = await Movie.aggregate([
             // { $match: {releaseDate: {$lte: new Date()}}},
-            { $match: {ratings: {$gte: 4.5}} },
-            { $group: {
-                _id: '$releaseYear', // all records groupping depends on this fields
-                avgRating: { $avg: '$ratings'},
-                avgPrice: { $avg: '$price'},
-                minPrice: { $min: '$price'},
-                maxPrice: { $max: '$price'},
-                priceTotal: { $sum: '$price'},
-                movieCount: { $sum: 1} // adding +1 for each record
-            } },
+            { $match: { ratings: { $gte: 4.5 } } },
+            {
+                $group: {
+                    _id: '$releaseYear', // all records groupping depends on this fields
+                    avgRating: { $avg: '$ratings' },
+                    avgPrice: { $avg: '$price' },
+                    minPrice: { $min: '$price' },
+                    maxPrice: { $max: '$price' },
+                    priceTotal: { $sum: '$price' },
+                    movieCount: { $sum: 1 } // adding +1 for each record
+                }
+            },
             { $sort: { minPrice: 1 } }
             // { $match: { maxPrice: {$gte: 60}} }
         ])
@@ -203,30 +178,25 @@ exports.getMovieStats = async (req, res) => {
                 stats
             }
         })
-    } catch (err) {
-        res.status(404).json({
-            status: "fail",
-            message: err.message
-        })
-    }
-}
+})
 
-exports.getMovieByGenre = async (req, res) => {
-    try {
+exports.getMovieByGenre = asyncErrorHandler( async (req, res, next) => {
 
         const genre = req.params.genre;
         const movies = Movie.aggregate([
             { $unwind: '$genres' },
-            { $group: {
-                _id: '$genres',
-                movieCount: {$sum: 1},
-                movies: {$push: '$name'}
-            } },
-            { $addFields: {genre: "$_id"}},
-            { $project: {_id: 0}},
-            { $sort: {movieCount: -1}},
+            {
+                $group: {
+                    _id: '$genres',
+                    movieCount: { $sum: 1 },
+                    movies: { $push: '$name' }
+                }
+            },
+            { $addFields: { genre: "$_id" } },
+            { $project: { _id: 0 } },
+            { $sort: { movieCount: -1 } },
             // { $limit: 6}
-            { $match: {genre: genre}}
+            { $match: { genre: genre } }
         ])
 
         console.log(movies.pipeline().at(5).$match);
@@ -241,13 +211,7 @@ exports.getMovieByGenre = async (req, res) => {
                 data
             }
         })
-    } catch (err) {
-        res.status(404).json({
-            status: "fail",
-            message: err.message
-        })
-    }
-}
+})
 
 
 //? checking does movie exist for id router
