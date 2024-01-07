@@ -8,7 +8,7 @@ const mongoose = require('mongoose')
 const app = require('./app')
 
 
-// console.log(process.env)
+console.log(process.env)
 
 mongoose.connect(process.env.CONN_STR).then((conn) => {
     // console.log(conn)
