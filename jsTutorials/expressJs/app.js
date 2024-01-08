@@ -4,6 +4,7 @@ const { create } = require('domain');
 const express = require('express');
 const morgan = require('morgan');
 const moviesRouter = require('./routes/movieRoutes');
+const authRouter = require('./routes/authRouter')
 const CustomError = require('./utils/CustomError');
 const globalErrorHandler = require('./controllers/errorController')
 
@@ -34,6 +35,7 @@ app.use((req, res, next) => {
 // app.delete('/api/v1/movies/:id', deleteMovie);
 
 app.use('/api/v1/movies', moviesRouter);
+app.use('/api/v1/users', authRouter);
 
 // should come after all routes
 app.all('*', (req, res, next) => {
