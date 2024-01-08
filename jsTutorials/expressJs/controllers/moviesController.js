@@ -230,6 +230,8 @@ exports.getMovieByGenre = asyncErrorHandler(async (req, res, next) => {
 })
 
 
+//! Working with json file instead of mongodb
+
 //? checking does movie exist for id router
 // exports.checkId = (req, res, next, value) => {
 
