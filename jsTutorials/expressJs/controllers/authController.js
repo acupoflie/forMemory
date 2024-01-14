@@ -60,7 +60,7 @@ exports.protect = asyncErrorHandler( async (req, res, next) => {
     const testToken = req.headers.authorization;
     let token;
 
-    if(testToken && testToken.startsWith('bearer')) {
+    if(testToken && testToken.startsWith('Bearer')) {
         token = testToken.split(' ')[1];
     }
     if(!token) {
@@ -71,9 +71,20 @@ exports.protect = asyncErrorHandler( async (req, res, next) => {
     const decodedToken = await util.promisify(jwt.verify)(token, process.env.SECRET_STR);
 
     //3. If the user exists
+    const user = await User.findById(decodedToken.id);
+    if(!user) {
+        const error = new CustomError('The user with the given token does not exist', 401);
+        next(error);
+    }
 
     //4. If the user changed password after the token was issued
+    const isPasswordChanged = await user.isPasswordChanged(decodedToken.iat);
+    if(isPasswordChanged) {
+        const error = new CustomError('Password has been changed recently. Please log in again!', 401);
+        next(error);
+    };
 
     //5. Allow user access to route
+    req.user = user;
     next();
 });
