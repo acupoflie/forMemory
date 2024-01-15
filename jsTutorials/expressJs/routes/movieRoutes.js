@@ -26,8 +26,8 @@ router.route('/')
 
 // moviesRouter.route('/api/v1/movies/:id')
 router.route('/:id')
-    .get(moviesController.getMovie)
+    .get(authController.protect, moviesController.getMovie)
     .patch(moviesController.updateMovie)
-    .delete(moviesController.deleteMovie);
+    .delete(authController.protect, authController.restrict('admin'), moviesController.deleteMovie);
 
 module.exports = router;
