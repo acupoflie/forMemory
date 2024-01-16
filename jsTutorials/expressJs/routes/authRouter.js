@@ -13,8 +13,7 @@ router.route('/login')
 router.route('/forgotPassword')
     .post(authController.forgotPassword);
 
-router.patch('/resetPassword/:token')
-    .post(authController.resetPassword);
-
+router.route('/resetPassword/:token')
+    .patch(authController.resetPassword);
 
 module.exports = router;

@@ -6,7 +6,8 @@ const morgan = require('morgan');
 const moviesRouter = require('./routes/movieRoutes');
 const authRouter = require('./routes/authRouter')
 const CustomError = require('./utils/CustomError');
-const globalErrorHandler = require('./controllers/errorController')
+const globalErrorHandler = require('./controllers/errorController');
+const userRouter = require('./routes/userRouter');
 
 let app = express();
 
@@ -35,7 +36,8 @@ app.use((req, res, next) => {
 // app.delete('/api/v1/movies/:id', deleteMovie);
 
 app.use('/api/v1/movies', moviesRouter);
-app.use('/api/v1/users', authRouter);
+app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/user', userRouter);
 
 // should come after all routes
 app.all('*', (req, res, next) => {
