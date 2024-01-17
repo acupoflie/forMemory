@@ -8,6 +8,18 @@ const sendEmail = require('../utils/email');
 const crypto = require('crypto');
 const authController = require('./authController');
 
+exports.getAllUsers = asyncErrorHandler(async (req, res, next) => {
+    const users = await User.find();
+
+    res.status(200).json({
+        status: "success",
+        result: users.length,
+        data: {
+            users
+        }
+    })
+})
+
 const filterReqObj = (obj, ...allowedFields) => {
     const newObj = {};
     Object.keys(obj).forEach((prop) => {
@@ -41,5 +53,17 @@ exports.updateMe = asyncErrorHandler(async (req, res, next) => {
     // we cant use save method without filtering the request params
     // await user.save();
 
-    authController.createSendResponse(updatedUser, 200, res);
+    res.status(204).json({
+        status: "success",
+        data: updatedUser
+    })
 });
+
+exports.deleteMe = asyncErrorHandler(async (req, res, next) => {
+    await User.findByIdAndUpdate(req.user._id, {active: false});
+
+    res.status(204).json({
+        status: "success",
+        data: null
+    })
+})

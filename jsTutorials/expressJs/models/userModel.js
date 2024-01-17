@@ -40,6 +40,11 @@ const userSchema = new mongoose.Schema({
             message: "Password with confirm pass does not match"
         }
     },
+    active: {
+        type: Boolean,
+        default: true,
+        select: false
+    },
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetTokenExpires: Date
@@ -57,7 +62,12 @@ userSchema.pre('save', async function(next) {
 
 userSchema.methods.comparePasswordInDb = async function(pswd, pswdDb) {
     return await bcrypt.compare(pswd, pswdDb);
-}
+};
+
+userSchema.pre(/^find/, function(next) {
+    this.find({active: {$ne: false}});
+    next();
+})
 
 userSchema.methods.isPasswordChanged = async function(JWTTimestamp) {
     if(this.passwordChangedAt) {
