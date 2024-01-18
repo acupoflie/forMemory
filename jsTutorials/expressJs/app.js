@@ -8,8 +8,21 @@ const authRouter = require('./routes/authRouter')
 const CustomError = require('./utils/CustomError');
 const globalErrorHandler = require('./controllers/errorController');
 const userRouter = require('./routes/userRouter');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 
 let app = express();
+
+app.use(helmet());
+
+let limiter = rateLimit({
+    max: 3,
+    windowMs: 60 * 60 * 1000,
+    message: 'We have received too requests from this IP. Please try again after 1 hour'
+});
+
+// Rate limiter middleware
+app.use('/api', limiter)
 
 // custom middleware
 const logger = function(req, res, next) {
@@ -18,7 +31,7 @@ const logger = function(req, res, next) {
 }
 
 // Using middlewares
-app.use(express.json())
+app.use(express.json({limit: '10kb'}))
 if(process.env.NODE_ENV === "development") {
     app.use(morgan('dev'))
 }
