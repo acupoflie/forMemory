@@ -10,6 +10,8 @@ const globalErrorHandler = require('./controllers/errorController');
 const userRouter = require('./routes/userRouter');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
+const sanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
 
 let app = express();
 
@@ -31,7 +33,10 @@ const logger = function(req, res, next) {
 }
 
 // Using middlewares
-app.use(express.json({limit: '10kb'}))
+app.use(express.json({limit: '10kb'}));
+app.use(sanitize());
+app.use(xss());
+
 if(process.env.NODE_ENV === "development") {
     app.use(morgan('dev'))
 }
