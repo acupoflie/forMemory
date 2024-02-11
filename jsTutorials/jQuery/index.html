@@ -19,7 +19,7 @@
         <p>This area will contain the center content area.</p>
     </div>
 
-    <div id="right" hidden>
+    <div id="right">
 
         <p>This area will contain the right content area.
         </p>
@@ -36,12 +36,8 @@
 
             $('button').click(function () {
 
-                $('#right').fadeIn(2500)
-                $('#center').fadeOut(2500)
+                $('#right').prepend('<h2>Header mother fucker</h2>');
 
-                // $('p:last').toggleClass('para')
-                // $('#left').css({'color' : 'purple', 'border' : 'solid 2px red'}).fadeOut('500000');
-                // $('p').text('Mother fucker.')
             })
 
         });
