@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link type="text/css" rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div id="left">
+
+        <p>This section is the left content area. </p>
+    </div>
+
+    <div id="center">
+
+        <p>This area will contain the center content area.</p>
+    </div>
+
+    <div id="right" hidden>
+
+        <p>This area will contain the right content area.
+        </p>
+
+    </div>
+
+    <div id="test">
+        <button> Hit button to change something </button>
+    </div>
+
+    <script src="jQueryX3.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('button').click(function () {
+
+                $('#right').fadeIn(2500)
+                $('#center').fadeOut(2500)
+
+                // $('p:last').toggleClass('para')
+                // $('#left').css({'color' : 'purple', 'border' : 'solid 2px red'}).fadeOut('500000');
+                // $('p').text('Mother fucker.')
+            })
+
+        });
+
+
+    </script>
+</body>
+
+</html>
