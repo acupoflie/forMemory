@@ -34,10 +34,10 @@
     <script>
         $(document).ready(function () {
 
-            $('button').click(function () {
-
-                $('#right').prepend('<h2>Header mother fucker</h2>');
-
+            $('#test').hover(function() {
+                $('div').css('background-color', 'violet');
+            }, function() {
+                $('div').css('background-color', 'white');
             })
 
         });
