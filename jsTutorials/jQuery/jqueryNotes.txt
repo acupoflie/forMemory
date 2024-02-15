@@ -1,0 +1,31 @@
+jQuery
+
+
+
+
+$('p:last').toggleClass('para')
+$('#left').css({'color' : 'purple', 'border' : 'solid 2px red'}).fadeOut('500000');
+$('p').text('Mother fucker.')
+
+$('#right').fadeIn(2500)
+
+$('#right').prepend('<h2>Header mother fucker</h2>');
+$('#right’).after(‘<h2>Header mother fucker</h2>');
+
+$('#right’).replaceWith(‘<h2>Header mother fucker</h2>');
+$('#right’).remove()
+
+$('#right’).mouseover()
+
+$(document).ready()   .load()
+
+$('#test').hover(function() {
+                $('div').css('background-color', 'violet');
+            }, function() {
+                $('div').css('background-color', 'white');
+            })
+
+
+
+
+

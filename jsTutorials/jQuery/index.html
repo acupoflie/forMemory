@@ -4,6 +4,9 @@
 
 <head>
     <link type="text/css" rel="stylesheet" href="style.css">
+    <link type="text/css" rel="stylesheet" href="darkhive/jquery-ui.css">
+    <link type="text/css" rel="stylesheet" href="darkhive/jquery-ui.structure.css">
+    <link type="text/css" rel="stylesheet" href="darkhive/jquery-ui.theme.css">
 
 </head>
 
@@ -12,6 +15,8 @@
     <div id="left">
 
         <p>This section is the left content area. </p>
+
+        <input type="text" id="datePicker">
     </div>
 
     <div id="center">
@@ -31,14 +36,15 @@
     </div>
 
     <script src="jQueryX3.js"></script>
+    <script src="jqueryui/jquery-ui.js"></script>
     <script>
         $(document).ready(function () {
 
-            $('#test').hover(function() {
-                $('div').css('background-color', 'violet');
-            }, function() {
-                $('div').css('background-color', 'white');
-            })
+            $('button').click(function() {
+                $('#right').slideToggle();
+            });
+
+            $('#datePicker').datepicker({changeYear: true});
 
         });
 
