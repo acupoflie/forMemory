@@ -48,7 +48,7 @@ function isPowerOfTwo(n) {
         return false
     }
     while(n > 1) {
-        if(n%1 !== 0) {
+        if(n%2 !== 0) {
             return false
         }
         n = n/2
@@ -61,8 +61,14 @@ function isPowerOfTwoBitwise(n) {
     if(n < 1) {
         return false
     }
+        !important
     return (n & (n-1)) === 0
 }
+    Note:
+        1 -> 1
+        2 -> 10
+        4 -> 100
+        8 -> 1000
 Big O = O(1)
 
 */
