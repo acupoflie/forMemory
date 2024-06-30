@@ -71,8 +71,7 @@ function isPowerOfTwoBitwise(n) {
         8 -> 1000
 Big O = O(1)
 
-*/
-
+--------------------------------------------------------
 
 function recursiveFibonacci(n) {
     if(n < 2) {
@@ -85,4 +84,25 @@ console.log(recursiveFibonacci(0))
 console.log(recursiveFibonacci(1))
 console.log(recursiveFibonacci(6))
 
-    //  Big O = O(2^n) - Recursive  -  Terrible solution
+ Big O = O(2^n) - Recursive  -  Terrible solution
+
+ --------------------------------------------------------
+
+
+function factorial(n) {
+    if (n < 3) {
+        return n
+    }
+    return n * factorial(n-1);
+}
+
+function recursiveFactorial(n){
+    if(n === 0) {
+        return 1
+    }
+    return n * recursiveFactorial(n-1);
+}
+
+Big O = O(n)
+
+*/
