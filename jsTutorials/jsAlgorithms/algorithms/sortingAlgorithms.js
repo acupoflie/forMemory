@@ -22,4 +22,26 @@ Big O = O(n^2)
 
 --------------------------------------------------------
 
+let arr = [8, 20, -2, 4, -6];
+
+function insertionSort(arr) {
+    for(let i = 1; i < arr.length; i++) {
+
+        let nti = arr[i];
+        let se = i - 1;
+
+        while(se >= 0 && arr[se] > nti) {
+            arr[se+1] = arr[se]
+            se = se - 1;
+        }
+
+        arr[se+1] = nti;
+    }
+}
+
+Big O = O(n^2)
+
+--------------------------------------------------------
+
 */
+
