@@ -18,6 +18,18 @@ function cartesianProduct(arr1, arr2) {
 const arr1 = [1, 2];
 const arr2 = [3, 4, 5];
 console.log(cartesianProduct(arr1, arr2));
-blank
-*/ 
 
+--------------------------------------------------------
+
+function climbingStaircase(n) {
+    let noOfWays = [1, 2];
+    for(let i = 2; i <= n; i++) {
+        noOfWays[i] = noOfWays[i - 1] + noOfWays[i - 2]
+    }
+
+    return noOfWays[n - 1]
+}
+
+Big O = O(n)
+
+*/
