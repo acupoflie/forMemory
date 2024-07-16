@@ -34,6 +34,8 @@ Big O = O(n)
 
 */
 
+//! Master Theorem
+//! Akra-bazzi
 
 function towerOfHanoi(n, fromRod, toRod, usingRod) {
     if(n === 1) {
@@ -46,5 +48,6 @@ function towerOfHanoi(n, fromRod, toRod, usingRod) {
     console.log(``)
 }
 
-
 towerOfHanoi(3, 'A', 'C', 'B')
+
+// Big O = O(2^n - 1)
