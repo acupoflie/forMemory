@@ -1,0 +1,19 @@
+
+
+Algorithm Design Techniquies:
+
+Brute Force
+Greedy
+Divide and Conquer
+Dynamic Programming
+Backtracking
+
+//
+
+TODO
+
+Solve problems
+- Findgin the GCD using Euclidian algorithm
+- Finding permutations and combinations of a list of numbers
+- Finding the longest commong substring in a given string
+- Knapsack problem
