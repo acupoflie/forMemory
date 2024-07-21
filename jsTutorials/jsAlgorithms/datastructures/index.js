@@ -16,3 +16,4 @@ function filterItems(arr, query) {
     return arr.filter((el) => el.toLowerCase().includes(query.toLowerCase()))
 }
 ///////////////
+//blank
