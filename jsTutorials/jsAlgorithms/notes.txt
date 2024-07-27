@@ -16,8 +16,13 @@ Solve problems
 - Finding the longest commong substring in a given string
 - Knapsack problem
 
-
-
-
-
 - js property
+
+
+Other data structures:
+
+Priority queue
+Circular linked list
+AVL trees, red black trees, tries
+Directed acyclic graphs
+Prim's, Kruskal's, Floyd's algorithms
